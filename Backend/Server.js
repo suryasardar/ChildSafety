@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const path = require('path');
 const authRoutes = require('./routes/authRoutes');
 const sensorRoutes = require('./routes/sensorRoutes');
+const cors = require('cors');
 // Load environment variables
 dotenv.config();
 
@@ -11,6 +12,9 @@ const app = express();
 
 // Middleware
 app.use(express.json());
+
+// Add to your server.js
+app.use(cors());
 
 // Routes
 app.use('/api/auth', authRoutes);

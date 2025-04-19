@@ -43,7 +43,7 @@ const Logout = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/auth/signup', {
+      const response = await fetch('http://localhost:5000/api/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ const Logout = () => {
       }
 
       // Navigate to sign in or directly authenticate
-      navigate('/signin');
+      navigate('/login');
     } catch (err) {
       setError(err.message);
     } finally {
