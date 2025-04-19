@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import {
   BarChart,
   Bar,
@@ -12,31 +14,33 @@ import Navbar from "./Navbar";
 import { AlertCircle, X } from "lucide-react";  // Importing icons from lucide-react
 
 const History = () => {
-  const [oxygenData, setOxygenData] = useState([]);
+  const [sensorData, setSensorData] = useState([]); 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  
+useEffect(() => {
+  fetchSensorData();
+}, []);
 
-  useEffect(() => {
-    fetch("https://your-backend-api.com/api/oxygen-history")
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch oxygen level");
-        return res.json();
-      })
-      .then((data) => {
-        // Adapt single record into array format for Recharts and table
-        const formattedData = [
-          {
-            id: 1,
-            value: data.averageOxygenLevel,
-            sound: data.averageOxygenLevel < 60 ? "Detected" : "Not Detected",
-            timestamp: data.timestamp,
-          }
-        ];
-        setOxygenData(formattedData);
-      })
-      .catch((err) => {
-        console.error("Error fetching oxygen level history:", err);
-      });
-  }, []);
 
+
+const fetchSensorData = async () => {
+  setLoading(true);
+  try {
+    const response = await axios.get("http://localhost:5000/api/sensor-data");
+    setSensorData(response.data.data);
+    setError('');
+  } catch (err) {
+    setError('Failed to fetch sensor data');
+    console.error('Error fetching sensor data:', err);
+  } finally {
+    setLoading(false);
+  }
+};
+
+console.log(sensorData.data,"urya");
+
+  // Simple Navbar component 
   const SimpleNavbar = () => (
     <nav className="p-4 border-b border-gray-200">
       <div className="container mx-auto">
@@ -55,6 +59,9 @@ const History = () => {
       <Navbar />
 
       <div className="container mx-auto p-4">
+
+        {loading && <p>Loading...</p>}
+        {error && <p>{error}</p>}
         <h2 className="text-2xl font-bold text-gray-800 my-4">
           Oxygen Level Summary
         </h2>

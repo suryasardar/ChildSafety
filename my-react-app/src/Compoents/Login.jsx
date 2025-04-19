@@ -31,7 +31,7 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/auth/signin', {
+      const response = await fetch('http://localhost:5000/api/auth/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -47,7 +47,7 @@ const Login = () => {
 
       // Store token in localStorage or use context
       localStorage.setItem('token', data.token);
-      navigate('/dashboard');
+      navigate('/');
     } catch (err) {
       setError(err.message);
     } finally {
