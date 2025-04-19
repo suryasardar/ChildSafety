@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const path = require('path');
 const authRoutes = require('./routes/authRoutes');
-
+const sensorRoutes = require('./routes/sensorRoutes');
 // Load environment variables
 dotenv.config();
 
@@ -14,6 +14,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api', sensorRoutes);
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
