@@ -1,14 +1,17 @@
 // src/Home.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Navbar from './Navbar';
 
 const Home = () => {
   return (
-    <div className='flex justify-center items-center h-screen' >
-      <h1>Home Page</h1>
-      <p className='text-2xl'>Welcome to the Home page!</p>
+ 
+    <>
+   <Navbar/>
+    <div>
       <Link to="/login">Go to Login</Link>
     </div>
+    </>
   );
 };
 
