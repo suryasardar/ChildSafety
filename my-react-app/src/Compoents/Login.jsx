@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { EyeIcon, EyeOffIcon } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+// import ScreenshotImage from '../../assets/screenshot_2025_04_19_180319.png';
+
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -55,6 +57,11 @@ const Login = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      {/* <img
+  src={ScreenshotImage}
+  alt="Child safety in car"
+  className="mx-auto w-full h-auto rounded-lg shadow-md"
+/> */}
       <div className="w-full max-w-md space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">

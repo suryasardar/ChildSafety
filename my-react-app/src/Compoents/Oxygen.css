@@ -1,0 +1,8 @@
+.navbar {
+    display: flex-column !important; 
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    right: 0;
+  }

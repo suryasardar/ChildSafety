@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import {
@@ -7,13 +7,11 @@ import {
   XAxis,
   YAxis,
   Tooltip,
-  Legend,
   ResponsiveContainer,
   Cell
 } from "recharts";
-
- 
- 
+import Navbar from "./Navbar";
+import { AlertCircle, X } from "lucide-react";  // Importing icons from lucide-react
 
 const History = () => {
   const [sensorData, setSensorData] = useState([]); 
@@ -57,82 +55,79 @@ console.log(sensorData.data,"urya");
   );
 
   return (
-    <div className="bg-gray-50 min-h-screen">
-      <SimpleNavbar />
-      
+    <>
+      <Navbar />
+
       <div className="container mx-auto p-4">
 
         {loading && <p>Loading...</p>}
         {error && <p>{error}</p>}
         <h2 className="text-2xl font-bold text-gray-800 my-4">
-          Sensor Data History
+          Oxygen Level Summary
         </h2>
-        
-        {/* Legend */}
+
         <div className="mb-4">
           <div className="flex items-center mb-1">
             <div className="w-4 h-4 bg-green-500 mr-2"></div>
-            <span>Sound Detected</span>
+            <span>Safe Oxygen Level</span>
           </div>
           <div className="flex items-center">
             <div className="w-4 h-4 bg-red-500 mr-2"></div>
-            <span>No Sound</span>
+            <span>Low Oxygen (Sound Detected)</span>
           </div>
         </div>
-        
+
         {/* Chart */}
-        <div className="bg-white border border-gray-200 rounded mb-6" style={{ height: "400px" }}>
+        <div className="bg-white border border-gray-200 rounded mb-6" style={{ height: "300px" }}>
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={sensorData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
-              <XAxis dataKey="id" />
-              <YAxis />
+            <BarChart data={oxygenData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+              <XAxis dataKey="id" tick={{ display: "none" }} />
+              <YAxis domain={[0, 100]} />
               <Tooltip />
-              <Bar dataKey="value" name="Sensor Value">
-                {sensorData.map((entry, index) => (
+              <Bar dataKey="value" name="Oxygen Level">
+                {oxygenData.map((entry, index) => (
                   <Cell
                     key={`cell-${index}`}
-                    fill={entry.sound === "Detected" ? "#10B981" : "#EF4444"}
+                    fill={entry.sound === "Detected" ? "#EF4444" : "#10B981"}
                   />
                 ))}
               </Bar>
             </BarChart>
           </ResponsiveContainer>
         </div>
-        
-        {/* Data Table */}
-        <h3 className="text-xl font-bold mb-4">Data Table</h3>
+
+        {/* Table */}
+        <h3 className="text-xl font-bold mb-4">Latest Entry</h3>
         <div className="bg-white border border-gray-200 rounded overflow-hidden mb-6">
           <table className="min-w-full">
             <thead className="bg-gray-50">
               <tr>
                 <th className="py-2 px-4 text-left">ID</th>
-                <th className="py-2 px-4 text-left">Value</th>
+                <th className="py-2 px-4 text-left">Oxygen Level</th>
                 <th className="py-2 px-4 text-left">Sound</th>
+                <th className="py-2 px-4 text-left">Timestamp</th>
               </tr>
             </thead>
             <tbody>
-              {sensorData.slice(0, 10).map((sensor) => (
+              {oxygenData.map((sensor) => (
                 <tr key={sensor.id} className="border-t border-gray-200">
                   <td className="py-2 px-4">{sensor.id}</td>
                   <td className="py-2 px-4">{sensor.value}</td>
-                  <td className="py-2 px-4 text-blue-600">
-                    {sensor.sound}
+                  <td className="py-2 px-4 text-blue-600">{sensor.sound}</td>
+                  <td className="py-2 px-4 text-gray-500">
+                    {new Date(sensor.timestamp).toLocaleString()}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        
-        <div className="text-gray-600 mb-6">
-          Showing 10 of 20 entries
-        </div>
-        
+
         <footer className="text-center text-gray-600 py-4 border-t border-gray-200">
-          Sensor Monitoring System © 2025
+          Child Monitoring System © 2025
         </footer>
       </div>
-    </div>
+    </>
   );
 };
 
