@@ -1,4 +1,6 @@
 import React from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import {
   BarChart,
   Bar,
@@ -10,30 +12,36 @@ import {
   Cell
 } from "recharts";
 
-const sensorData = [
-  { id: 1, value: 45, sound: "Detected" },
-  { id: 2, value: 82, sound: "Not Detected" },
-  { id: 3, value: 17, sound: "Detected" },
-  { id: 4, value: 66, sound: "Not Detected" },
-  { id: 5, value: 29, sound: "Detected" },
-  { id: 6, value: 73, sound: "Not Detected" },
-  { id: 7, value: 5, sound: "Detected" },
-  { id: 8, value: 91, sound: "Not Detected" },
-  { id: 9, value: 38, sound: "Detected" },
-  { id: 10, value: 64, sound: "Not Detected" },
-  { id: 11, value: 12, sound: "Detected" },
-  { id: 12, value: 57, sound: "Not Detected" },
-  { id: 13, value: 80, sound: "Detected" },
-  { id: 14, value: 26, sound: "Not Detected" },
-  { id: 15, value: 94, sound: "Detected" },
-  { id: 16, value: 33, sound: "Not Detected" },
-  { id: 17, value: 70, sound: "Detected" },
-  { id: 18, value: 8, sound: "Not Detected" },
-  { id: 19, value: 49, sound: "Detected" },
-  { id: 20, value: 61, sound: "Not Detected" }
-];
+ 
+ 
 
 const History = () => {
+  const [sensorData, setSensorData] = useState([]); 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  
+useEffect(() => {
+  fetchSensorData();
+}, []);
+
+
+
+const fetchSensorData = async () => {
+  setLoading(true);
+  try {
+    const response = await axios.get("http://localhost:5000/api/sensor-data");
+    setSensorData(response.data.data);
+    setError('');
+  } catch (err) {
+    setError('Failed to fetch sensor data');
+    console.error('Error fetching sensor data:', err);
+  } finally {
+    setLoading(false);
+  }
+};
+
+console.log(sensorData.data,"urya");
+
   // Simple Navbar component 
   const SimpleNavbar = () => (
     <nav className="p-4 border-b border-gray-200">
@@ -53,6 +61,9 @@ const History = () => {
       <SimpleNavbar />
       
       <div className="container mx-auto p-4">
+
+        {loading && <p>Loading...</p>}
+        {error && <p>{error}</p>}
         <h2 className="text-2xl font-bold text-gray-800 my-4">
           Sensor Data History
         </h2>

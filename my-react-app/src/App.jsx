@@ -6,16 +6,20 @@ import Login from './Compoents/Login';
 import Logout from './Compoents/Logout';
 import Oxygenlevel from './Compoents/Oxygenlevel';
 import History from './Compoents/History';
+import PrivateRoute from './Compoents/PrivateRoute';
+import Signout from './Compoents/Singout';
 
 const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home/>} />
         <Route path="/login" element={<Login />} />
-        <Route path="/logout" element={<Logout />} />
-         <Route path="/oxygen" element={<Oxygenlevel />} />
-        <Route path="/history" element={<History />} />
+        <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
+        <Route path="/logout" element={<PrivateRoute><Logout /></PrivateRoute>} />
+        <Route path="/oxygen" element={<PrivateRoute><Oxygenlevel /></PrivateRoute>} />
+        <Route path="/history" element={<PrivateRoute><History /></PrivateRoute>} />
+        <Route path="/singout" element={ <Signout /> } />
+
       </Routes>
     </Router>
   );
