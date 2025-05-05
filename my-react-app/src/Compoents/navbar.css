@@ -1,23 +1,122 @@
 .navbar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: #15406c;
-    padding: 1rem;
-    z-index: 5;
-    gap: 1vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background: linear-gradient(90deg, #a7c7e7 0%, #e0e7ff 100%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.35rem 1.2rem;
+  border-bottom-left-radius: 18px;
+  border-bottom-right-radius: 18px;
+  min-height: 44px;
+}
+
+.navbar .navbar-links {
+  display: flex;
+  gap: 1.1rem;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.navbar a {
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 1.1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.navbar a:hover {
+  background: #dbeafe;
+  color: #0ea5e9;
+}
+
+.gear-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.gear-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: background 0.2s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gear-button svg {
+  width: 28px;
+  height: 28px;
+  color: #14b8a6;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.gear-button:hover {
+  background: #e0f2fe;
+  transform: rotate(20deg) scale(1.08);
+}
+
+.gear-button:active svg {
+  color: #0ea5e9;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 120%;
+  right: 0;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.13);
+  min-width: 140px;
+  padding: 0.5rem 0;
+  animation: slideDown 0.22s cubic-bezier(.4,0,.2,1);
+  border: 1px solid #e0e7ff;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-item {
+  width: 100%;
+  background: none;
+  border: none;
+  color: #ef4444;
+  font-weight: 600;
+  text-align: left;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+}
+
+.dropdown-item:hover {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    /* flex-direction: column; */
+    padding: 0.2rem 0.5rem;
+    border-radius: 0 0 18px 18px;
+    min-height: 38px;
   }
-  
-  .navbar button {
-    background-color: #61dafb;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1rem;
-    gap: 10px;
+  .navbar .navbar-links {
+    gap: 0.7rem;
   }
+}
